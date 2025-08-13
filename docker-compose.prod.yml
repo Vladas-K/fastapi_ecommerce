@@ -8,8 +8,8 @@ services:
     # Запускаем сервер Gunicorn
     command: gunicorn app.main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000
     # Открываем порт 8000 внутри и снаружи
-    ports:
-      - 8000:8000
+    # ports:
+    #  - 8000:8000
     depends_on:
       - db
 
@@ -21,6 +21,13 @@ services:
       - POSTGRES_USER=postgres_user
       - POSTGRES_PASSWORD=postgres_password
       - POSTGRES_DB=postgres_database
+
+  nginx:
+    build: nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
 
 volumes:
   postgres_data:
